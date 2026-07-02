@@ -1,57 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flashcard Quiz App</title>
-<link rel="stylesheet" href="style.css">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
 
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
 <div class="container">
 
-<h1>📚 Flashcard Quiz App</h1>
+    <h1>✨ Quote Generator</h1>
 
-<div class="card">
+    <div class="quote-box">
 
-<h2 id="question">Question</h2>
+        <p id="quote">
+            Loading Quote...
+        </p>
 
-<p id="answer" class="hidden">Answer</p>
+        <h3 id="author">
+            -
+        </h3>
 
-<button id="showBtn">Show Answer</button>
+    </div>
 
-</div>
-
-<div class="navigation">
-
-<button id="prevBtn">Previous</button>
-
-<span id="counter"></span>
-
-<button id="nextBtn">Next</button>
-
-</div>
-
-<div class="actions">
-
-<button id="editBtn">Edit</button>
-
-<button id="deleteBtn">Delete</button>
-
-</div>
-
-<div class="form">
-
-<h2>Add New Flashcard</h2>
-
-<input type="text" id="newQuestion" placeholder="Question">
-
-<input type="text" id="newAnswer" placeholder="Answer">
-
-<button id="addBtn">Add Flashcard</button>
-
-</div>
+    <button id="newQuote">
+        New Quote
+    </button>
 
 </div>
 
