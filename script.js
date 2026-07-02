@@ -1,73 +1,175 @@
-const quotes = [
+let flashcards = JSON.parse(localStorage.getItem("flashcards")) || [
 
 {
-    quote:"The future depends on what you do today.",
-    author:"Mahatma Gandhi"
+question:"What is HTML?",
+answer:"Hyper Text Markup Language"
 },
 
 {
-    quote:"Success is not final, failure is not fatal: it is the courage to continue that counts.",
-    author:"Winston Churchill"
+question:"What is CSS?",
+answer:"Cascading Style Sheets"
 },
 
 {
-    quote:"Dream big and dare to fail.",
-    author:"Norman Vaughan"
-},
-
-{
-    quote:"Believe you can and you're halfway there.",
-    author:"Theodore Roosevelt"
-},
-
-{
-    quote:"Your limitation—it's only your imagination.",
-    author:"Unknown"
-},
-
-{
-    quote:"Push yourself because no one else is going to do it for you.",
-    author:"Unknown"
-},
-
-{
-    quote:"Great things never come from comfort zones.",
-    author:"Unknown"
-},
-
-{
-    quote:"Don't watch the clock; do what it does. Keep going.",
-    author:"Sam Levenson"
-},
-
-{
-    quote:"Everything you can imagine is real.",
-    author:"Pablo Picasso"
-},
-
-{
-    quote:"Stay hungry. Stay foolish.",
-    author:"Steve Jobs"
+question:"What is JavaScript?",
+answer:"Programming language used for web development"
 }
 
 ];
 
-const quote = document.getElementById("quote");
+let current = 0;
 
-const author = document.getElementById("author");
+const question = document.getElementById("question");
+const answer = document.getElementById("answer");
+const showBtn = document.getElementById("showBtn");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const counter = document.getElementById("counter");
 
-const button = document.getElementById("newQuote");
+function save(){
 
-function randomQuote(){
-
-let random = Math.floor(Math.random()*quotes.length);
-
-quote.innerText = `"${quotes[random].quote}"`;
-
-author.innerText = "- " + quotes[random].author;
+localStorage.setItem("flashcards",JSON.stringify(flashcards));
 
 }
 
-button.addEventListener("click",randomQuote);
+function display(){
 
-window.onload=randomQuote;
+question.innerText = flashcards[current].question;
+
+answer.innerText = flashcards[current].answer;
+
+answer.classList.add("hidden");
+
+showBtn.innerText="Show Answer";
+
+counter.innerText=`${current+1} / ${flashcards.length}`;
+
+}
+
+display();
+
+showBtn.onclick=function(){
+
+if(answer.classList.contains("hidden")){
+
+answer.classList.remove("hidden");
+
+showBtn.innerText="Hide Answer";
+
+}
+
+else{
+
+answer.classList.add("hidden");
+
+showBtn.innerText="Show Answer";
+
+}
+
+}
+
+nextBtn.onclick=function(){
+
+current++;
+
+if(current>=flashcards.length){
+
+current=0;
+
+}
+
+display();
+
+}
+
+prevBtn.onclick=function(){
+
+current--;
+
+if(current<0){
+
+current=flashcards.length-1;
+
+}
+
+display();
+
+}
+
+document.getElementById("addBtn").onclick=function(){
+
+const q=document.getElementById("newQuestion").value;
+
+const a=document.getElementById("newAnswer").value;
+
+if(q==""||a==""){
+
+alert("Enter Question and Answer");
+
+return;
+
+}
+
+flashcards.push({
+
+question:q,
+
+answer:a
+
+});
+
+save();
+
+document.getElementById("newQuestion").value="";
+
+document.getElementById("newAnswer").value="";
+
+current=flashcards.length-1;
+
+display();
+
+}
+
+document.getElementById("deleteBtn").onclick=function(){
+
+if(flashcards.length==1){
+
+alert("Cannot delete last flashcard");
+
+return;
+
+}
+
+flashcards.splice(current,1);
+
+if(current>=flashcards.length){
+
+current=flashcards.length-1;
+
+}
+
+save();
+
+display();
+
+}
+
+document.getElementById("editBtn").onclick=function(){
+
+let q=prompt("Edit Question",flashcards[current].question);
+
+if(q==null) return;
+
+let a=prompt("Edit Answer",flashcards[current].answer);
+
+if(a==null) return;
+
+flashcards[current].question=q;
+
+flashcards[current].answer=a;
+
+save();
+
+display();
+
+}
